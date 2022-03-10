@@ -1,0 +1,16 @@
+.weather-details{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 47%;
+    align-items: start;
+
+    .detail{
+        padding: 0.1rem;
+
+        &:last-child{
+            font-weight: 600;
+            font-size: 1.5rem;
+        }
+    }
+}

@@ -1,0 +1,41 @@
+.current-weather-section{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    height: 20vh;
+    margin-top: 10px;
+    border-radius: 1rem;
+    max-width: 700px;
+
+    .current-weather-info{
+        width: 90%;
+        height: 100px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        
+       
+    
+    
+        .weather-icon-and-disc{
+            width: 47%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+    
+            .weather-icon{
+                height:100px;
+                width:100px;
+                background-size: cover;
+            }
+            .disc{
+                display: flex;
+                align-items: center;
+            }
+        }
+    }
+    
+}
+
