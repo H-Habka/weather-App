@@ -1,45 +1,58 @@
-import React, { useEffect,useState } from 'react'
+import React, {useState} from 'react'
 import './weatherPage.scss'
+import Autocomplete from '@mui/material/Autocomplete';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
 import SettingsIcon from '@mui/icons-material/Settings';
 import CurrentWeatherInfo from '../../components/current-weather-info/CurrentWeatherInfo';
 import WeatherListContainer from '../../components/weather-list-container/WeatherListContainer';
-import { getCurrentWeather, getDayWeather } from '../../FetchData/getWeatherData';
+import { countries } from '../../CountriesAbbservation';
+
 
 const WeatherPage = () => {
-    const [currentWeather,setCurrentWeather] = useState({})
-    const [dayWeather,setDayWeather] = useState([])
+    const [changeCountryPopupState, setChangeCountryPopupState] = useState(false)
+
+    const handleSubmit = () => {
+        console.log(document.getElementById('combo-box-demo').value)
+    }
     let test = "test"
-    const ApiWeatherKey = '4fc4c4f9b1174e5d8ba145306220903'
 
-    useEffect(() => {
-        const getData = async()=>{
-            setDayWeather(await getDayWeather(ApiWeatherKey,'Syria'))
-            setCurrentWeather(await getCurrentWeather(ApiWeatherKey,'Syria'))
-        }
-        getData()
-    },[])
-
-    // useEffect(()=> {
-    //     console.log('dayWeather: ', dayWeather)
-    //     console.log('currentWeather: ',currentWeather)
-    // },[dayWeather,currentWeather])
-    
- 
     return (
         <>
-            <div className="container">
-                <SettingsIcon className="settingIcon" />
+            <div className="Weather-page-container">
+                <SettingsIcon className="settingIcon" onClick={() => { setChangeCountryPopupState(!changeCountryPopupState) }} />
 
                 <div className="image-container" style={{
                     backgroundImage: `url(${test})`
-                }}>
-
-                </div>
-                <CurrentWeatherInfo currentWeather={currentWeather}/>
-                <WeatherListContainer dayWeather={dayWeather}/>
+                }}></div>
+                <CurrentWeatherInfo />
+                <WeatherListContainer />
             </div>
-        </>
 
+            {
+                changeCountryPopupState ? (
+                    <div className="popup-container" onClick={
+                        (e) => {
+                            if (e.target.className === 'popup-container')
+                                setChangeCountryPopupState(false)
+                        }}>
+                        <div className="enter-anothe-country-popup">
+                            <h3 className="popup-title">
+                                Chose Another Country
+                            </h3>
+                                <Autocomplete
+                                    disablePortal
+                                    id="combo-box-demo"
+                                    options={countries}
+                                    sx={{ width: 300 }}
+                                    renderInput={(params) => <TextField {...params}label="Country"/>}
+                                />
+                            <Button variant="contained" onClick={handleSubmit}>Check weather</Button>
+                        </div>
+                    </div>
+                ) : ('')
+            }
+        </>
     )
 }
 

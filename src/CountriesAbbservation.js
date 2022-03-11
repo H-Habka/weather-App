@@ -122,3 +122,8 @@ export const countryName = {
 	GY: 'Guyana',
 	PY: 'Paraguay',
 }
+
+
+export const countries = Object.values(countryName).map(item => {
+	return {label : item}
+})

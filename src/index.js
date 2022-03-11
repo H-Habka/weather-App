@@ -3,13 +3,17 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import { createTheme, ThemeProvider } from '@mui/material';
+import { BrowserRouter as Router } from 'react-router-dom'
+import { store } from './redux/store';
+import { Provider } from 'react-redux';
+
 
 
 const customTheme = createTheme({
   palette: {
     primary: {
-      main:'#408000',
-     
+      main: '#408088',
+
     }
     // secondary:{
     //   main:
@@ -18,9 +22,13 @@ const customTheme = createTheme({
 });
 
 ReactDOM.render(
-      <ThemeProvider theme={customTheme}>
+  <ThemeProvider theme={customTheme}>
+    <Provider store={store}>
+      <Router>
         <App />
-      </ThemeProvider>
+      </Router>
+    </Provider>
+  </ThemeProvider>
   ,
   document.getElementById('root')
 );

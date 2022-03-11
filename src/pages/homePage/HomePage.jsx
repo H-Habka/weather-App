@@ -1,51 +1,56 @@
-import React, { useState } from 'react'
+import React from 'react'
+import './HomePage.scss'
+import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
-import Autocomplete from '@mui/material/Autocomplete'; 
 import Button from '@mui/material/Button';
-import { countryName } from '../../CountriesAbbservation';
-import { getIpDetails } from '../../FetchData/getIpDetails';
+import { countries } from '../../CountriesAbbservation';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+import { currentLocationCountry } from '../../redux/ipDetails/ipDetails-selector';
+import { fetchIpDetailsInit } from '../../redux/ipDetails/ipDetails-actions';
+import { weatherDetailsFetchInit } from '../../redux/weatherDetails/weatherDetails-actions'; 
 
-const HomePage = () => {
-    const ApiWeatherKey = '4fc4c4f9b1174e5d8ba145306220903'
-    const [country,setCountry] = useState('')
-    const  countries = Object.values(countryName).map(item => {
-        return {label : item}
-    })
+const HomePage = ({currentLocationCountry,initIpDetailsFetching,initWeatherDetailsFetching}) => {
 
-    const handleSubmit = () =>{
-        console.log(document.getElementById('combo-box-demo').value)
+    const getWeatherInfo = () => {
+        let selectedCountryFromInput = document.getElementById('combo-box-demo').value
+        initWeatherDetailsFetching(selectedCountryFromInput)
     }
 
-    const getLocation = async() =>{
-        let res = await getIpDetails()
-        setCountry(countryName[res.location.country])
+    const getIpDetailsInfo = () => {
+        initIpDetailsFetching()
     }
 
-    const getWeatherInfo = async() => {
-        console.log('res')
-    }
-
-
-    // const
-    // 
     return (
         <>
-            <Autocomplete
-                disablePortal
-                id="combo-box-demo"
-                options={countries}
-                sx={{ width: 300 }}
-                renderInput={(params) => 
-                                <TextField 
-                                    {...params} 
-                                    label="Country"
-                                />}
-            />
-
-            <Button variant="contained" onClick={getWeatherInfo}>My Location</Button>
-            <Button variant="contained" onClick={handleSubmit}>Check weather</Button>
+            <div className="home-page-container">
+                <div className='content-container'>
+                    <h2 className="enter-country-title">
+                        Enter Country To Get Weather Details
+                    </h2>
+                    <Autocomplete
+                        disablePortal
+                        id="combo-box-demo"
+                        options={countries}
+                        sx={{ width: 300 }}
+                        renderInput={(params) => <TextField {...params} label="Country"/>}
+                    />
+                    <Button variant="contained" onClick={getWeatherInfo}>Check weather</Button>
+                    <Button variant="contained" onClick={getIpDetailsInfo}>My Location</Button>
+                </div>
+            </div>
         </>
     )
 }
 
-export default HomePage
+const mapStateToProps = createStructuredSelector({
+    currentLocationCountry : currentLocationCountry
+})
+
+const mapDispatchToProps = dispatch => ({
+    initIpDetailsFetching : () => dispatch(fetchIpDetailsInit()),
+    initWeatherDetailsFetching : (country) => dispatch(weatherDetailsFetchInit(country))
+    
+})
+
+export default connect(mapStateToProps,mapDispatchToProps)(HomePage)

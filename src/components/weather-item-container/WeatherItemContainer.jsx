@@ -21,7 +21,7 @@ const WeatherItemContainer = ({ hourWeather }) => {
                 detailsState ? (
                     <div className="popup-container" onClick={
                         (e) => {
-                            if (e.target.className == 'popup-container')
+                            if (e.target.className === 'popup-container')
                                 setDetailsState(false)
                         }
                     }>

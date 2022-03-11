@@ -1,12 +1,13 @@
 .weather-details{
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-around;
     width: 47%;
-    align-items: start;
+    align-items: flex-start;
 
     .detail{
         padding: 0.1rem;
+        line-height: 2rem;
 
         &:last-child{
             font-weight: 600;
