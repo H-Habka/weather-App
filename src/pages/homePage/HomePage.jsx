@@ -5,20 +5,26 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { countries } from '../../CountriesAbbservation';
 import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
-import { currentLocationCountry } from '../../redux/ipDetails/ipDetails-selector';
 import { fetchIpDetailsInit } from '../../redux/ipDetails/ipDetails-actions';
-import { weatherDetailsFetchInit } from '../../redux/weatherDetails/weatherDetails-actions'; 
+import { weatherDetailsFetchInit } from '../../redux/weatherDetails/weatherDetails-actions';
+import { useNavigate } from 'react-router';
 
-const HomePage = ({currentLocationCountry,initIpDetailsFetching,initWeatherDetailsFetching}) => {
+
+
+const HomePage = ({ initIpDetailsFetching, initWeatherDetailsFetching }) => {
+
+    const navigate = useNavigate()
 
     const getWeatherInfo = () => {
         let selectedCountryFromInput = document.getElementById('combo-box-demo').value
         initWeatherDetailsFetching(selectedCountryFromInput)
+        navigate('/weather')
+
     }
 
     const getIpDetailsInfo = () => {
         initIpDetailsFetching()
+        navigate('/weather')
     }
 
     return (
@@ -33,24 +39,26 @@ const HomePage = ({currentLocationCountry,initIpDetailsFetching,initWeatherDetai
                         id="combo-box-demo"
                         options={countries}
                         sx={{ width: 300 }}
-                        renderInput={(params) => <TextField {...params} label="Country"/>}
+                        renderInput={(params) => <TextField {...params} label="Country" />}
                     />
-                    <Button variant="contained" onClick={getWeatherInfo}>Check weather</Button>
-                    <Button variant="contained" onClick={getIpDetailsInfo}>My Location</Button>
+                    <div className="buttons-container">
+                        <Button variant="contained" onClick={getIpDetailsInfo}>Get My Location</Button>
+                        <Button variant="contained" onClick={getWeatherInfo}>Is It Raining ?</Button>
+                    </div>
                 </div>
             </div>
         </>
     )
 }
 
-const mapStateToProps = createStructuredSelector({
-    currentLocationCountry : currentLocationCountry
+const mapStateToProps = (state) => ({
+    currentLocationCountry: state.currentLocationCountry
 })
 
 const mapDispatchToProps = dispatch => ({
-    initIpDetailsFetching : () => dispatch(fetchIpDetailsInit()),
-    initWeatherDetailsFetching : (country) => dispatch(weatherDetailsFetchInit(country))
-    
+    initIpDetailsFetching: () => dispatch(fetchIpDetailsInit()),
+    initWeatherDetailsFetching: (country) => dispatch(weatherDetailsFetchInit(country))
+
 })
 
-export default connect(mapStateToProps,mapDispatchToProps)(HomePage)
+export default connect(mapStateToProps, mapDispatchToProps)(HomePage)

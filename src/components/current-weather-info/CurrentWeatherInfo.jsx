@@ -4,26 +4,26 @@ import { CurrentWeatherDetails } from '../../redux/weatherDetails/weatherDetails
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
+const CurrentWeatherInfo = ({ CurrentWeatherDetails }) => {
 
-
-const CurrentWeatherInfo = ({CurrentWeatherDetails}) => {
-    return (
-        <div className="current-weather-section">
-            <div className="current-weather-info">
-                <div className="weather-icon-and-disc">
-                    <div className="weather-icon" style={{
-                        backgroundImage: `url(${CurrentWeatherDetails?.condition?.icon})`
-                    }}></div>
-                    <div className="disc">{CurrentWeatherDetails?.condition?.text}</div>
-                </div>
-                <WeatherDetails {...CurrentWeatherDetails}/>
-            </div>
+  console.log('test test  : ',CurrentWeatherDetails)
+  return (
+    <div className="current-weather-section">
+      <div className="current-weather-info">
+        <div className="weather-icon-and-disc">
+          <div className="weather-icon" style={{
+              backgroundImage: `url(${CurrentWeatherDetails?.condition?.icon})`
+          }}/>
+          <div className="disc">{CurrentWeatherDetails?.condition?.text}</div>
         </div>
-    )
+        <WeatherDetails {...CurrentWeatherDetails} />
+      </div>
+    </div>
+  )
 }
 
 const mapStateToProps = createStructuredSelector({
-    CurrentWeatherDetails : CurrentWeatherDetails,
+    CurrentWeatherDetails: CurrentWeatherDetails,
 })
 
 export default connect(mapStateToProps)(CurrentWeatherInfo)

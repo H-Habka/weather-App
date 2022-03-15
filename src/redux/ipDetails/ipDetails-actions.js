@@ -1,5 +1,8 @@
 import { ipDetailsTypes } from "./ipDetails-types"; 
 import {getIpDetails} from '../../FetchData/getIpDetails'
+import { countryName } from '../../CountriesAbbservation'
+
+import { weatherDetailsFetchInit } from "../weatherDetails/weatherDetails-actions";
 
 const startFetchingIpDetails = () => ({
     type: ipDetailsTypes.FETCH_IP_DETAILS_START
@@ -20,22 +23,9 @@ export const fetchIpDetailsInit = () => dispatch => {
     console.log("start fetching")
     dispatch(startFetchingIpDetails())
     getIpDetails().then((res) => {
-        dispatch(fetchingIpDetailsSuccess(res))
+        dispatch(fetchingIpDetailsSuccess(countryName[res.location.country]))
+        dispatch(weatherDetailsFetchInit(countryName[res.location.country]))
     }).catch((error)=> {
         dispatch(fetchingIpDetailsFielier(error))
     })
 }
-
-
-
-
-
-
-// export const fetchInit = () => dispatch => {
-//     dispatch(dataFetchBegin())
-//     getDataFromCollection('colections')
-//     .then(res => {
-//         dispatch(dataFetchSuccess(res.map(item => item.data())))
-//     }).catch(err => dispatch(dataFetchFalier(err)))
-
-// }

@@ -1,59 +1,38 @@
-import React, {useState} from 'react'
+import React from 'react'
 import './weatherPage.scss'
-import Autocomplete from '@mui/material/Autocomplete';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-import SettingsIcon from '@mui/icons-material/Settings';
 import CurrentWeatherInfo from '../../components/current-weather-info/CurrentWeatherInfo';
 import WeatherListContainer from '../../components/weather-list-container/WeatherListContainer';
-import { countries } from '../../CountriesAbbservation';
+import SettingIconWithPopup from '../../components/settingIcon/settingIcon';
+import Spinner from '../../components/spinner/Spinner'
+import { connect } from 'react-redux';
 
+const WeatherPage = ({dataIsLoading}) => {
 
-const WeatherPage = () => {
-    const [changeCountryPopupState, setChangeCountryPopupState] = useState(false)
+  return (
+    <>
+      <div className="Weather-page-container">
+        {
+          dataIsLoading ? (
+            <Spinner />
+          ) : (
+            <>
+              <SettingIconWithPopup />
+              <CurrentWeatherInfo />
+              <WeatherListContainer />
+            </>
+          )
+        }
 
-    const handleSubmit = () => {
-        console.log(document.getElementById('combo-box-demo').value)
-    }
-    let test = "test"
-
-    return (
-        <>
-            <div className="Weather-page-container">
-                <SettingsIcon className="settingIcon" onClick={() => { setChangeCountryPopupState(!changeCountryPopupState) }} />
-
-                <div className="image-container" style={{
-                    backgroundImage: `url(${test})`
-                }}></div>
-                <CurrentWeatherInfo />
-                <WeatherListContainer />
-            </div>
-
-            {
-                changeCountryPopupState ? (
-                    <div className="popup-container" onClick={
-                        (e) => {
-                            if (e.target.className === 'popup-container')
-                                setChangeCountryPopupState(false)
-                        }}>
-                        <div className="enter-anothe-country-popup">
-                            <h3 className="popup-title">
-                                Chose Another Country
-                            </h3>
-                                <Autocomplete
-                                    disablePortal
-                                    id="combo-box-demo"
-                                    options={countries}
-                                    sx={{ width: 300 }}
-                                    renderInput={(params) => <TextField {...params}label="Country"/>}
-                                />
-                            <Button variant="contained" onClick={handleSubmit}>Check weather</Button>
-                        </div>
-                    </div>
-                ) : ('')
-            }
-        </>
-    )
+      </div>
+    </>
+  )
 }
 
-export default WeatherPage
+const mapStateToProps = state => ({
+  // dataIsLoading:
+  dataIsLoading: state.weatherDetails.isFetchingWeatherDetailsStatus |  state.currentLocationCountry.isFetchingDetailsStatus
+
+})
+export default connect(mapStateToProps)(WeatherPage)
+
+

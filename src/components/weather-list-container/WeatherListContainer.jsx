@@ -9,8 +9,8 @@ const WeatherListContainer = ({dayWeatherDetails}) => {
   return (
     <div className = "weather-list-container">
             {
-                dayWeatherDetails?.map((item) => (
-                    <WeatherItemContainer hourWeather={item}/>
+                dayWeatherDetails?.map((item,idx) => (
+                    <WeatherItemContainer key={idx} hourWeather={item}/>
                 ))
             }
     </div>

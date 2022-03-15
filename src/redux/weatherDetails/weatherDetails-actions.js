@@ -1,9 +1,10 @@
 import { weatherDetailsTypes } from "./weatherDetails-types";
 import { getWeatherData } from "../../FetchData/getWeatherData";
-const ApiWeatherKey = '4fc4c4f9b1174e5d8ba145306220903'
+import { filteredWeatherDetails } from "./filteredWeatherDetails";
 
-const weatherDetailsFetch = () => ({
-    type: weatherDetailsTypes.WEATHER_DETAILS_START_FETCH
+const weatherDetailsFetch = (country) => ({
+    type: weatherDetailsTypes.WEATHER_DETAILS_START_FETCH,
+    payload : country
 })
 
 const weatherDetailsSuccess = (currentDeatils) => ({
@@ -18,10 +19,11 @@ const weatherDetailsFiled = (errorMsg) => ({
 
 export const weatherDetailsFetchInit = (country) => dispatch => {
     console.log('weather start fetch')
-    dispatch(weatherDetailsFetch())
-    getWeatherData(ApiWeatherKey,country).then((weatherDetails)=>{
-        dispatch(weatherDetailsSuccess(weatherDetails))
+    dispatch(weatherDetailsFetch(country))
+    getWeatherData(process.env.REACT_APP_API_KEY,country).then((weatherDetails)=>{
+        dispatch(weatherDetailsSuccess(filteredWeatherDetails(weatherDetails)))
     }).catch((errorMessage)=>{
         dispatch(weatherDetailsFiled(errorMessage))
     })
 }
+

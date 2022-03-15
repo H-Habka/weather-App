@@ -2,8 +2,9 @@ import { weatherDetailsTypes } from "./weatherDetails-types";
 
 const INITIAL_STATE = {
     isFetchingWeatherDetailsStatus : false,
-    weatherDetails : {},
-    errorMessage : ''
+    weatherDetails : '',
+    errorMessage : '',
+    selectedCountry :''
 }
 
 export const weatherReducer = (state = INITIAL_STATE, action) => {
@@ -11,7 +12,8 @@ export const weatherReducer = (state = INITIAL_STATE, action) => {
         case weatherDetailsTypes.WEATHER_DETAILS_START_FETCH:
             return ({
                 ...state,
-                isFetchingWeatherDetailsStatus: true
+                isFetchingWeatherDetailsStatus: true,
+                selectedCountry : action.payload
             })
         case weatherDetailsTypes.WEATHER_DETAILS_FETCH_SUCCESS:
             return ({

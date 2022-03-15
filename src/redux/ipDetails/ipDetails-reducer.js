@@ -2,7 +2,7 @@ import { ipDetailsTypes } from "./ipDetails-types";
 
 const INITIAL_STATE = {
     isFetchingDetailsStatus : false,
-    ipDetails : {},
+    currentLocationCountry : '',
     errorMessage : ''
 }
 
@@ -18,7 +18,7 @@ export const ipDetailsReducer = (state = INITIAL_STATE , action) => {
             return ({
                 ...state,
                 isFetchingDetailsStatus : false,
-                ipDetails : action.payload
+                currentLocationCountry : action.payload
             })
         case ipDetailsTypes.FETCH_IP_DETAILS_FIELIER:
             return ({

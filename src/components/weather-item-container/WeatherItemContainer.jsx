@@ -7,9 +7,7 @@ const WeatherItemContainer = ({ hourWeather }) => {
     return (
         <>
             <div className='weather-item-container' onClick={() => setDetailsState(!detailsState)}>
-                <div className="item-icon" style={{
-                    backgroundImage: `url(${hourWeather.condition.icon})`
-                }}></div>
+                <div className="item-icon" style={{backgroundImage: `url(${hourWeather.condition.icon})`}}/>
                 <div className="time">
                     Time: {hourWeather.time.slice(-5,)}
                 </div>
