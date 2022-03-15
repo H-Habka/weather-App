@@ -18,13 +18,13 @@ const HomePage = ({ initIpDetailsFetching, initWeatherDetailsFetching }) => {
     const getWeatherInfo = () => {
         let selectedCountryFromInput = document.getElementById('combo-box-demo').value
         initWeatherDetailsFetching(selectedCountryFromInput)
-        navigate('/weather')
+        navigate('/weather-App/weather')
 
     }
 
     const getIpDetailsInfo = () => {
         initIpDetailsFetching()
-        navigate('/weather')
+        navigate('/weather-App/weather')
     }
 
     return (
