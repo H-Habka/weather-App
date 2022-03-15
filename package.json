@@ -2,7 +2,7 @@
   "name": "new_pro",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://h-habka.github.io/weather-App",
+  "homepage": "https://h-habka.github.io/weather-App/",
   "dependencies": {
     "@emotion/react": "^11.8.1",
     "@emotion/styled": "^11.8.1",
