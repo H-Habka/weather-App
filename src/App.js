@@ -10,9 +10,8 @@ function App() {
 
     <div className='page-container'>
       <Routes>
-        
-        <Route path='/#/weather-App' element={<HomePage />} />
-        <Route path='/#/weather-App/weather' element={<WeatherPage />} />
+        <Route path='/' element={<HomePage />} />
+        <Route path='/weather' element={<WeatherPage />} />
       </Routes>
     </div>
 
