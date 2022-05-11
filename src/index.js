@@ -7,6 +7,7 @@ import { BrowserRouter as Router } from 'react-router-dom'
 import { store,persistor } from './redux/store';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
+import {HashRouter} from 'react-router-dom'
 
 
 
@@ -27,11 +28,11 @@ const customTheme = createTheme({
 ReactDOM.render(
   <ThemeProvider theme={customTheme}>
     <Provider store={store}>
-      <Router>
+      <HashRouter>
         <PersistGate persistor={persistor}>
           <App />
         </PersistGate>
-      </Router>
+      </HashRouter>
     </Provider>
   </ThemeProvider>
   ,
